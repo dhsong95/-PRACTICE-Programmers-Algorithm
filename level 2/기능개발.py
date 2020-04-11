@@ -13,4 +13,4 @@ def solution(progresses, speeds):
     return work
 
 
-assert solution([93,30,55], [1,30,5]) == [2, 1]
+assert solution([93, 30, 55], [1, 30, 5]) == [2, 1]
