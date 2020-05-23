@@ -1,40 +1,41 @@
-def compare(num1, num2):
-    return 0 if num1 == num2 else (1 if num1 + num2 > num2 + num1 else -1)
+def compare(a, b):
+    return int(a + b) - int(b + a)
 
 
 def merge_sort(numbers):
     if len(numbers) <= 1:
         return numbers
 
-    middle = len(numbers) // 2
-    left = merge_sort(numbers[:middle])
-    right = merge_sort(numbers[middle:])
+    idx = len(numbers) // 2
 
-    left_idx = 0
-    right_idx = 0
+    l1 = merge_sort(numbers[:idx])
+    l2 = merge_sort(numbers[idx:])
 
-    merged = list()
-    while left_idx < len(left) and right_idx < len(right):
-        left_item = left[left_idx]
-        right_item = right[right_idx]
+    l3 = list()
 
-        if compare(left_item, right_item) > 0:
-            left_idx += 1
-            merged.append(left_item)
+    idx = 0
+    jdx = 0
+
+    while idx < len(l1) and jdx < len(l2):
+        a = l1[idx]
+        b = l2[jdx]
+
+        if compare(a, b) > 0:
+            l3.append(a)
+            idx += 1
         else:
-            right_idx += 1
-            merged.append(right_item)
+            l3.append(b)
+            jdx += 1
 
-    while left_idx < len(left):
-        left_item = left[left_idx]
-        merged.append(left_item)
-        left_idx += 1
-    while right_idx < len(right):
-        right_item = right[right_idx]
-        merged.append(right_item)
-        right_idx += 1
+    while idx < len(l1):
+        l3.append(l1[idx])
+        idx += 1
 
-    return merged
+    while jdx < len(l2):
+        l3.append(l2[jdx])
+        jdx += 1
+
+    return l3
 
 
 def solution(numbers):
@@ -43,4 +44,5 @@ def solution(numbers):
     return ''.join(numbers) if not numbers[0] == '0' else '0'
 
 
-assert solution([6, 10, 2]) == '6210'
+if __name__ == '__main__':
+    assert solution([6, 10, 2]) == '6210'
