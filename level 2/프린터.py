@@ -1,26 +1,29 @@
-def solution(priorities, location):
-    move = 0
-    while priorities:
-        max_priority = max(priorities)
-        top_priority = priorities.pop(0)
+from collections import deque
 
-        if top_priority == max_priority:
-            move += 1
+
+def solution(priorities, location):
+    queue = deque(priorities)
+    counter = 0
+
+    while queue:
+        max_priority = max(queue)
+        priority = queue.popleft()
+
+        if priority == max_priority:
+            counter += 1
             if location == 0:
                 break
             else:
                 location -= 1
         else:
-            priorities.append(top_priority)
+            queue.append(priority)
             if location == 0:
-                location = len(priorities) - 1
+                location = len(queue) - 1
             else:
                 location -= 1
 
-    return move
+    return counter
 
 
-try:
+if __name__ == '__main__':
     assert solution([2, 1, 3, 2], 2) == 1
-except AssertionError:
-    print(solution([2, 1, 3, 2], 2))
