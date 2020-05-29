@@ -1,21 +1,24 @@
 def solution(arrangement):
-    st = list()
     idx = 0
-    total = 0
+    stack = list()
+    counter = 0
     while idx < len(arrangement):
-        parenthesis = arrangement[idx]
+        # () 패턴: 레이저 동작
+        if idx < len(arrangement) - 1 and arrangement[idx:idx + 2] == '()':
+            counter += len(stack)
+            idx += 2
+        # ( 패턴: 쇠막대기 추가
+        elif arrangement[idx] == '(':
+            stack.append(arrangement[idx])
+            idx += 1
+        # ) 패턴: 마지막 쇠막대기 처리 필요
+        elif arrangement[idx] == ')':
+            stack.pop(-1)
+            counter += 1
+            idx += 1
 
-        if parenthesis == '(':
-            if idx + 1 < len(arrangement) and arrangement[idx + 1] == ')':
-                total += len(st)
-                idx += 1
-            else:
-                st.append(parenthesis)
-        else:
-            total += 1
-            st.pop(-1)
-        idx += 1
-    return total
+    return counter
 
 
-assert solution('()(((()())(())()))(())') == 17
+if __name__ == '__main__':
+    assert solution('()(((()())(())()))(())') == 17
