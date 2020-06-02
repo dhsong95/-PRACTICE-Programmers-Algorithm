@@ -1,12 +1,18 @@
 def solution(clothes):
-    clothes_dict = dict()
-    for v, k in clothes:
-        if k not in clothes_dict.keys():
-            clothes_dict[k] = 0
-        clothes_dict[k] += 1
+    hash_table = dict()
+    for _, kind in clothes:
+        if kind not in hash_table:
+            hash_table[kind] = 0
+        hash_table[kind] += 1
 
-    answer = 1
-    for v in clothes_dict.values():
-        answer *= (v + 1)
+    number_of_cases = 1
+    for value in hash_table.values():
+        number_of_cases *= (value + 1)
 
-    return answer - 1
+    number_of_cases -= 1
+    return number_of_cases
+
+
+if __name__ == '__main__':
+    assert solution([["yellow_hat", "headgear"], ["blue_sunglasses", "eyewear"], ["green_turban", "headgear"]]) == 5
+    assert solution([["crow_mask", "face"], ["blue_sunglasses", "face"], ["smoky_makeup", "face"]]) == 3
